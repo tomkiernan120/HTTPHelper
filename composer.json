@@ -1,0 +1,13 @@
+{
+    "name": "tom/http-helper",
+    "description": "HTTP Helper Functions",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Tom",
+            "email": "tkiernan120@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
