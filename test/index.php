@@ -5,7 +5,7 @@ ini_set( "error_log", "./php-error.log" );
 
 require "../vendor/autoload.php";
 
-$HTTP = new HTTPHelper\HTTPHelper();
+$HTTP = new HTTPFriend\HTTPHelper();
 
 
 $HTTP->setConfigParameter( "baseURL", "/_tom/httphelper/test/" );

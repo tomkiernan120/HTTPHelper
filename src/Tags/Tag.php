@@ -42,4 +42,26 @@ class Tag
       return $html;
     }
 
+    public function createElement( $tag, $attr = [], $selfClosing = false, $close = false )
+    {
+      $element = "<" . (( $close ) ? "/" : "" );
+      $element .= "$tag";
+      if( !empty( $attr ) ){
+        foreach( $attr as $ak => $av ){
+          $element .= " {$ak}=\"{$av}\" ";
+        }
+      }
+
+      $element = (( $selfClosing ) ? "/" : "" ) . ">";
+
+      return $element;
+    }
+
+    public function output( $options = [] )
+    {
+      ob_start();
+      echo $this->createElement( $options["tag"], $options["attr"], $options['selfClosing'], $options["close"] );
+      echo ob_get_clean();
+    }
+
 }
