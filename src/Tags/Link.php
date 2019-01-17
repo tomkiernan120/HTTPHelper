@@ -1,6 +1,6 @@
 <?php
 
-namespace HTTPHelper\Tags;
+namespace HTTPFriend\Tags;
 
 class Link {
     
