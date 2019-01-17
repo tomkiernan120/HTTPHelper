@@ -11,56 +11,65 @@ use HTTPFriend\Tags\Js as Js;
 use HTTPFriend\Tags\Css as Css;
 
 
-class HTTPHelper {
-    
+class HTTPHelper
+{
+
     public $charset = "UTF-8";
     public $html;
+    public $tag;
+    public $CSS;
 
     private $config = [];
-    
-    public function __construct( $config = [] )
+
+    public function __construct($config = [])
     {
-        $this->setConfig( $config );
-        $this->tag = $this->tag ?: new Tag;
-        $this->CSS = $this->CSS ?: new Css;
+        $this->setConfig($config);
+        $this->tag = $this->tag ? : new Tag;
+        $this->CSS = $this->CSS ? : new Css;
     }
 
-    public function setConfig( $config = [] ){
+    public function setConfig($config = [])
+    {
         $this->config = $config;
     }
 
-    public function setConfigParameter( $configPart, $configSetting ){
-        $this->config[ $configPart ] = $configSetting;
+    public function setConfigParameter($configPart, $configSetting)
+    {
+        $this->config[$configPart] = $configSetting;
     }
 
-    public function getConfig(){
+    public function getConfig()
+    {
         return $this->config;
     }
 
-    public function getConfigSetting( $configPart ){
-        return $this->config[ $configPart ];
+    public function getConfigSetting($configPart)
+    {
+        return $this->config[$configPart];
     }
-    
-    public function setHTML( $html = null ) 
+
+    public function setHTML($html = null)
     {
         $this->html = $html;
     }
 
-    public function getHTML() {
+    public function getHTML()
+    {
         return $this->html;
     }
 
-    public function parseHTML(){
-        if( isset( $this->html ) ){
+    public function parseHTML()
+    {
+        if (isset($this->html)) {
 
-            if( $this->getConfigSetting( "baseURL" ) ){
+            if ($this->getConfigSetting("baseURL")) {
 
-                $baseURL = $this->getConfigSetting( "baseURL" );
+                $baseURL = $this->getConfigSetting("baseURL");
 
-                $this->setHTML( $this->tag->cleanURLs( $this->getHTML(), $baseURL ) );
+                $this->setHTML($this->tag->cleanURLs($this->getHTML(), $baseURL));
 
-            }   
-        } 
+            }
+        }
 
 
     }

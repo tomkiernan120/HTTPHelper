@@ -57,6 +57,22 @@ class Tag
 
   public function output($options = [])
   {
+    if (!isset($options["tag"])) {
+      throw new Exception("No Tag defined");
+    }
+
+    if (!isset($options["attr"])) {
+      $options["attr"] = [];
+    }
+
+    if (!isset($options["selfClosing"])) {
+      $options["selfClosing"] = false;
+    }
+
+    if (!isset($options["close"])) {
+      $options["close"] = false;
+    }
+
     ob_start();
     echo $this->createElement($options["tag"], $options["attr"], $options['selfClosing'], $options["close"]);
     echo ob_get_clean();

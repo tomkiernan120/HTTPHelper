@@ -9,6 +9,7 @@ class Handler
 
   public $subittedData;
   public $files;
+  public $formcount;
 
   public function __construct()
   {
