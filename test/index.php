@@ -7,10 +7,13 @@ require "../vendor/autoload.php";
 
 $HTTP = new HTTPFriend\HTTPHelper();
 
-
 $HTTP->setConfigParameter( "baseURL", "/_tom/httphelper/test/" );
 
-$HTTP->setHTML(  file_get_contents( "./index.html" )  );
+ob_start();
+
+require "./index2.php";
+
+$HTTP->setHTML( ob_get_clean() );
 
 $HTTP->parseHTML();
 

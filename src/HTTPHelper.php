@@ -7,6 +7,8 @@ use HTTPFriend\Form\Handler as Handler;
 use HTTPFriend\Tags\Tag as Tag;
 use HTTPFriend\Tags\Link as Link;
 use HTTPFriend\Tags\Meta as Meta;
+use HTTPFriend\Tags\Js as Js;
+use HTTPFriend\Tags\Css as Css;
 
 
 class HTTPHelper {
@@ -20,6 +22,7 @@ class HTTPHelper {
     {
         $this->setConfig( $config );
         $this->tag = $this->tag ?: new Tag;
+        $this->CSS = $this->CSS ?: new Css;
     }
 
     public function setConfig( $config = [] ){

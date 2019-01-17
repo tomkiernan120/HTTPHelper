@@ -8,4 +8,9 @@ class Meta extends Tag {
     parent::__construct(  );
   }
 
+  public function meta( $options = [] ) 
+  {
+    $this->output( [ "tag" => "meta",  "attr" => $options, "selfClosing" => true ] );
+  }
+
 }
