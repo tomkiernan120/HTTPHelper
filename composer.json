@@ -1,5 +1,5 @@
 {
-    "name": "tom/http-helper",
+    "name": "tom/HTTPFriend",
     "description": "HTTP Helper Functions",
     "type": "library",
     "authors": [{
