@@ -1,6 +1,6 @@
 <?php
 
-namespace HTTP\Tags;
+namespace HTTPHelper\Tags;
 
 class Meta {
     

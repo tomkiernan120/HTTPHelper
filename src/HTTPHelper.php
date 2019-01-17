@@ -1,12 +1,12 @@
 <?php
 
-namespace HTTP;
+namespace HTTPHelper;
 
 
-use HTTP\Form\Handler as Handler;
-use HTTP\Tags\Tag as Tag;
-use HTTP\Tags\Link as Link;
-use HTTP\Tags\Meta as Meta;
+use HTTPHelper\Form\Handler as Handler;
+use HTTPHelper\Tags\Tag as Tag;
+use HTTPHelper\Tags\Link as Link;
+use HTTPHelper\Tags\Meta as Meta;
 
 
 class HTTPHelper {

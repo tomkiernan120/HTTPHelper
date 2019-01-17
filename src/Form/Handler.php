@@ -1,6 +1,6 @@
 <?php
 
-namespace HTTP\Form;
+namespace HTTPHelper\Form;
 
 class Handler {
     
