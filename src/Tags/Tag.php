@@ -54,7 +54,6 @@ class Tag
 
 
       $element .= (( $selfClosing ) ? "/" : "" ) . ">";
-      error_log( print_r( $element,1 ) );
 
       return $element;
     }
