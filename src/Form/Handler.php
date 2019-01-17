@@ -51,6 +51,7 @@ class Handler {
 
     $this->tag->output([ "tag" => "input", "attr" => [ "type" => "hidden", "name" => "http-friend-name" ] ] );
     echo ob_get_clean();
+    return $this;
   }
 
   public function close(){
