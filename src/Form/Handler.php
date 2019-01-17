@@ -51,6 +51,7 @@ class Handler {
 
     $this->tag->output([ "tag" => "input", "attr" => [ "type" => "hidden", "name" => "http-friend-name" ] ] );
     echo ob_get_clean();
+    return $this;
   }
 
   public function close(){
@@ -123,12 +124,6 @@ class Handler {
   }
 
   public function image( $attr = [], $options = [] )
-  {
-    $attr["type"] = strtolower( __METHOD__ );
-    $this->tag->output( [ "tag" => "input", "attr" => $attr ] );
-  }
-
-  public function color( $attr = [], $options = [] )
   {
     $attr["type"] = strtolower( __METHOD__ );
     $this->tag->output( [ "tag" => "input", "attr" => $attr ] );
@@ -219,7 +214,7 @@ class Handler {
     if( !empty( $options ) ) {
 
       foreach( $options as $ak => $av ){
-        echo "<option "
+        echo "<option ";
         if( isset( $attr["valueOnly"] ) ){
           echo " value=\"{$av}\" ";
         }
