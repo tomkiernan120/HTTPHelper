@@ -32,23 +32,22 @@ class Handler
 
     $formname = "http-friend-name-";
 
-    if (isset($formSettings["controller"]) && isset($formSettings["method"])) {
-      $formname .= "-{$formSettings["controller"]}-{$formSettings["method"]}";
+    if (isset($formSettings["controller"]) && isset($formSettings["controllerMethod"])) {
+      $formname .= "-{$formSettings["controller"]}-{$formSettings["controllerMethod"]}";
     }
 
     $formname .= "-{$this->formcount}";
 
     if (isset($_POST[$formname])) {
 
-      $this->processFormSubmission();
+      $returnData = $this->processFormSubmission($_POST, $formSettings);
+      return $returnData;
     }
 
     ob_start();
     $this->tag->output(["tag" => "form", "attr" => $attributes]);
 
-
-
-    $this->tag->output(["tag" => "input", "attr" => ["type" => "hidden", "name" => "http-friend-name"]]);
+    $this->tag->output(["tag" => "input", "attr" => ["type" => "hidden", "name" => $formname]]);
     echo ob_get_clean();
     return $this;
   }
@@ -59,139 +58,153 @@ class Handler
   }
 
 
-  public function processFormSubmission()
+  public function processFormSubmission($data = [], $settings)
   {
+    $returnData = [];
+    if (isset($settings["controller"]) && class_exists($settings["controller"])) {
 
+      $controller = new $settings["controller"](@$settings["controllerPassin"]);
+
+      if (isset($settings["controllerMethod"]) && method_exists($controller, $settings["controllerMethod"])) {
+        $returnData = $controller->{$settings["controllerMethod"]}(@$settings["passin"]);
+      } else {
+        throw new Exception("No method defined for {$settings["controller"]}:{$settings["controllerMethod"]}");
+      }
+    } else {
+      throw new Exception("Could not find {$settings["controller"]}");
+    }
+
+    return $returnData;
   }
 
   public function text($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("text");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function phone($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("phone");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function email($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("email");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function number($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("number");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function button($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("button");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function password($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("password");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
   public function hidden($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("hidden");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function checkbox($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("checkbox");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function radio($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("radio");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function file($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("file");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function image($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("image");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function color($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("color");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function date($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("date");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function datetimeLocal($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("datetime-local");
+    $attr["type"] = strtolower(stFUNCTIONe("L", "-l", __METHOD__));
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function month($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("month");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function range($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("range");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function reset($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("reset");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function search($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("search");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function tel($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("tel");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function url($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("url");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function week($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("week");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
   public function submit($attr = [], $options = [])
   {
-    $attr["type"] = strtolower("submit");
+    $attr["type"] = strtolower(__FUNCTION__);
     $this->tag->output(["tag" => "input", "attr" => $attr]);
   }
 
@@ -211,7 +224,7 @@ class Handler
     unset($attr["value"]);
     $this->tag->output(["tag" => "select", "attr" => $attr]);
 
-    if ( !empty($options) ) {
+    if (!empty($options)) {
 
       foreach ($options as $ak => $av) {
         echo "<option ";
