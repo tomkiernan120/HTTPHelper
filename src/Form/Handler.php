@@ -49,6 +49,9 @@ class Handler
     $this->tag->output(["tag" => "form", "attr" => $attributes]);
 
     $this->tag->output(["tag" => "input", "attr" => ["type" => "hidden", "name" => $formname]]);
+
+    $this->formcount++;
+
     echo ob_get_clean();
     return $this;
   }

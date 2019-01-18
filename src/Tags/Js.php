@@ -12,6 +12,10 @@ class Js extends Tag {
   public function js( $options = [] )
   {
 
+    if( !isset( $options["type"] ) ){
+      $options["type"] = "text/javascript";
+    }
+
     $this->output( [ "tag" => "script", "attr" => $options ] ); 
     $this->output( [ "tag" => "script", "close" => true ] ); 
   }

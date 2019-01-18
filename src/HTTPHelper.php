@@ -24,8 +24,11 @@ class HTTPHelper
     public function __construct($config = [])
     {
         $this->setConfig($config);
+        $this->form = $this->form ?: new Handler;
         $this->tag = $this->tag ? : new Tag;
         $this->CSS = $this->CSS ? : new Css;
+        $this->JS = $this->JS ? : new Js;
+        $this->META = $this->META ? : new Meta;
     }
 
     public function setConfig($config = [])
