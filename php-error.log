@@ -1,0 +1,4 @@
+[19-Feb-2019 17:13:21 Europe/London] PHP Catchable fatal error:  Object of class Test could not be converted to string in /websites/active/_tom/HTTPFriend/src/Form/FormHandler.php on line 39
+[19-Feb-2019 17:13:42 Europe/London] PHP Catchable fatal error:  Object of class Test could not be converted to string in /websites/active/_tom/HTTPFriend/src/Form/FormHandler.php on line 39
+[19-Feb-2019 17:17:18 Europe/London] 
+[19-Feb-2019 17:17:18 Europe/London] PHP Fatal error:  Call to a member function text() on null in /websites/active/_tom/HTTPFriend/test/index.php on line 21

@@ -4,7 +4,7 @@ namespace HTTPFriend\Form;
 
 use HTTPFriend\Tags\Tag as Tag;
 
-class Handler
+class FormHandler
 {
 
   public $subittedData;
@@ -16,25 +16,34 @@ class Handler
     $this->tag = new Tag;
   }
 
-  public function open($formSettings = [])
+  public function open( $formSettings = [])
   {
 
     if (!isset($formSettings["method"])) {
       $attributes["method"] = "POST";
-    } else {
+    } 
+    else {
       $attributes["method"] = trim($formSettings["method"]);
     }
 
     if (isset($formSettings["action"])) {
       $attributes["action"] = $formSettings["action"];
-    } else {
+    } 
+    else {
       $attributes["action"] = "./";
     }
 
     $formname = "http-friend-name-";
 
-    if (isset($formSettings["controller"]) && isset($formSettings["controllerMethod"])) {
-      $formname .= "-{$formSettings["controller"]}-{$formSettings["controllerMethod"]}";
+    if( isset( $formSettings["controller"] ) && is_string( $formSettings["controller"] ) ) {
+      $formname .= "{$formSettings["controller"]}-";
+    }
+    else if( is_object( $formSettings["controller"] ) ){
+      $formname .= get_class( $formSettings["controller"] )."-";
+    }
+
+    if( isset( $formSettings["controllerMethod"] ) && is_string( $formSettings["controllerMethod"] ) ) {
+      $formname .= "-{$formSettings["controllerMethod"]}";
     }
 
     $formname .= "-{$this->formcount}";
@@ -46,6 +55,7 @@ class Handler
     }
 
     ob_start();
+
     $this->tag->output(["tag" => "form", "attr" => $attributes]);
 
     $this->tag->output(["tag" => "input", "attr" => ["type" => "hidden", "name" => $formname]]);
@@ -53,6 +63,7 @@ class Handler
     $this->formcount++;
 
     echo ob_get_clean();
+
     return $this;
   }
 
@@ -65,21 +76,29 @@ class Handler
   public function processFormSubmission($data = [], $settings)
   {
     $returnData = [];
-    if (isset($settings["controller"]) && class_exists($settings["controller"])) {
-
+    if (isset($settings["controller"]) && is_string( $settings["controller"] ) && class_exists($settings["controller"]) ) {
       $controller = new $settings["controller"](@$settings["controllerPassin"]);
+    }
+    else if( isset( $settings["controller"] ) && is_object( $settings["controller"] ) ){
+      $controller = $settings["controller"];
+    }
+     else if( !isset( $settings["controller"] ) ) {
+      throw new \Exception("No Controller passed to form");
+    }
+    else {
+      throw new \Exception("Could not find {$settings["controller"]}");
+    }
 
-      if (isset($settings["controllerMethod"]) && method_exists($controller, $settings["controllerMethod"])) {
-        $returnData = $controller->{$settings["controllerMethod"]}(@$settings["passin"]);
-      } else {
-        throw new Exception("No method defined for {$settings["controller"]}:{$settings["controllerMethod"]}");
-      }
+    if (isset($settings["controllerMethod"]) && method_exists( $controller, $settings["controllerMethod"])) {
+      $returnData = $controller->{$settings["controllerMethod"]}(@$settings["passin"]);
     } else {
-      throw new Exception("Could not find {$settings["controller"]}");
+      throw new \Exception("No method defined for {$settings["controller"]}:{$settings["controllerMethod"]}");
     }
 
     return $returnData;
-  }
+  } 
+   
+
 
   public function text($attr = [], $options = [])
   {

@@ -3,7 +3,7 @@
 namespace HTTPFriend;
 
 
-use HTTPFriend\Form\Handler as Handler;
+use HTTPFriend\Form\FormHandler as FormHandler;
 use HTTPFriend\Tags\Tag as Tag;
 use HTTPFriend\Tags\Link as Link;
 use HTTPFriend\Tags\Meta as Meta;
@@ -24,7 +24,7 @@ class HTTPHelper
     public function __construct($config = [])
     {
         $this->setConfig($config);
-        $this->form = $this->form ?: new Handler;
+        $this->form = $this->form ?: new FormHandler;
         $this->tag = $this->tag ? : new Tag;
         $this->CSS = $this->CSS ? : new Css;
         $this->JS = $this->JS ? : new Js;
