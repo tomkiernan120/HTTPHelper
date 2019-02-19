@@ -8,8 +8,10 @@ class FormHandler
 {
 
   public $subittedData;
+  public $rawSubmittedData;
   public $files;
   public $formcount;
+  public $returnData;
 
   public function __construct()
   {
@@ -18,6 +20,8 @@ class FormHandler
 
   public function open( $formSettings = [])
   {
+
+    $attributes = [];
 
     if (!isset($formSettings["method"])) {
       $attributes["method"] = "POST";
@@ -32,6 +36,9 @@ class FormHandler
     else {
       $attributes["action"] = "./";
     }
+
+
+    $attributes = array_merge( $attributes, is_array( $formSettings["attributes"] ) ? $formSettings["attributes"] : [] ); 
 
     $formname = "http-friend-name-";
 
@@ -48,15 +55,42 @@ class FormHandler
 
     $formname .= "-{$this->formcount}";
 
-    if (isset($_POST[$formname])) {
+    if( strtolower( $attributes["method"] ) == "post" ) {
+      $this->submittedData = $_POST;
+      $this->submittedData["files"] = $_FILES;
 
-      $returnData = $this->processFormSubmission($_POST, $formSettings);
-      return $returnData;
+      if( $attributes["enctype"] == "multipart/form-data" ) {
+        $raw = http_build_query( $_POST );
+      }
+      else {
+        $raw = file_get_contents( "php://input" );
+      }
     }
+    else {
+      $this->submittedData = $_GET;
+      $raw = $_SERVER["QUERY_STRING"];
+    }
+
+    $this->rawSubmittedData = [];
+
+    if( strlen( $raw ) ) {
+      $raw  = explode( "&", $raw );
+
+      foreach( $raw as $d ) {
+        $d = explode( "=", $d );
+        $this->rawSubmittedData[urlencode( $d[0] )] = urlencode( $d[1] );
+      }
+    }
+
+    if( isset( $formSettings["controller"] ) ){
+      $this->returnData = $this->processFormSubmission( $this->submittedData, $formSettings );
+    }
+
+
 
     ob_start();
 
-    $this->tag->output(["tag" => "form", "attr" => $attributes]);
+    $this->tag->output(["tag" => "form", "attr" => $attributes ]);
 
     $this->tag->output(["tag" => "input", "attr" => ["type" => "hidden", "name" => $formname]]);
 
@@ -73,7 +107,7 @@ class FormHandler
   }
 
 
-  public function processFormSubmission($data = [], $settings)
+  public function processFormSubmission( $data = [], $settings )
   {
     $returnData = [];
     if (isset($settings["controller"]) && is_string( $settings["controller"] ) && class_exists($settings["controller"]) ) {
