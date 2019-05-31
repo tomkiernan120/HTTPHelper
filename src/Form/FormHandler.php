@@ -56,6 +56,7 @@ class FormHandler
     $formname .= "-{$this->formcount}";
 
     if( strtolower( $attributes["method"] ) == "post" ) {
+      $_POST = array_map('htmlspecialchars', $_POST);
       $this->submittedData = $_POST;
       $this->submittedData["files"] = $_FILES;
 
@@ -67,6 +68,7 @@ class FormHandler
       }
     }
     else {
+      $_GET = array_map('htmlspecialchars', $_GET);
       $this->submittedData = $_GET;
       $raw = $_SERVER["QUERY_STRING"];
     }
